@@ -9,7 +9,7 @@ object Sidebar {
     private val server = Bukkit.getServer()
     private val manager =  server.scoreboardManager
 
-    fun update(player: Player, title: String, content: Array<String>) {
+    fun update(player: Player, title: String, content: List<String>) {
         val scoreboard = manager.newScoreboard
         val name = "test"
 

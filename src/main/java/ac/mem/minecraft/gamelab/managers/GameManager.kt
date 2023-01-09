@@ -7,6 +7,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Server
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
+import org.bukkit.scheduler.BukkitTask
 
 class GameManager {
     private val server = Bukkit.getServer()
@@ -15,12 +16,18 @@ class GameManager {
 
     private var status = GameStatus.WAITING
 
-    init {
-//        val task = object : BukkitRunnable() {
-//            override fun run() {
-//                updateSidebar()
-//            }
-//        }.runTaskTimer(plugin, 5, 10000);
+    private var task: BukkitTask? = null
+
+    fun enable(plugin: Gamelab) {
+        task = object : BukkitRunnable() {
+            override fun run() {
+                updateSidebar()
+            }
+        }.runTaskTimer(plugin, 0, 2)
+    }
+
+    fun disable(plugin: Gamelab) {
+        task!!.cancel()
     }
 
     fun updateStatus(status: GameStatus) {
@@ -29,7 +36,8 @@ class GameManager {
 
     fun updateSidebar() {
         server.onlinePlayers.forEach { p: Player ->
-            Sidebar.update(p, "Mem\'s Game Lab", arrayOf("123", "456"))
+            val content = "123\n456\n${p.location.blockX} ${p.location.blockY} ${p.location.blockZ}"
+            Sidebar.update(p, "Mem\'s Game Lab", content.split('\n'))
         }
     }
 }
