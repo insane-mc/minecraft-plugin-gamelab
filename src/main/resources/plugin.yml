@@ -1,0 +1,6 @@
+name: Gamelab
+version: '${project.version}'
+main: ac.mem.minecraft.gamelab.Gamelab
+api-version: 1.19
+prefix: MemGameLab
+authors: [ memset0 ]
